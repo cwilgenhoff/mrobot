@@ -1,5 +1,7 @@
-import { configureInstructions } from './instructions/index';
+import path from 'path';
+import Interpreter from './interpreter';
 
-global.instructions = configureInstructions();
 
-console.log(global.instructions);
+const interpreter = new Interpreter(path.join(__dirname, '..', 'sample', 'data.txt'));
+
+interpreter.parse();
