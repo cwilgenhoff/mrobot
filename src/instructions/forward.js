@@ -1,10 +1,10 @@
 class InstructionForward {
   constructor() {
-    this.name = 'F';
+    this.id = 'F';
   }
 
-  getInstructionName() {
-    return this.name;
+  getInstructionId() {
+    return this.id;
   }
 
   execute = () => {
