@@ -20,7 +20,17 @@ class Robot {
   }
 
   execute = (instructions, grid) => {
-    instructions.map(instruction => instruction.execute({ grid, robot: this }));
+    if (!grid) {
+      return;
+    }
+
+    instructions.map(instruction => {
+      if (this.isLost) {
+        return;
+      }
+
+      instruction.execute({ grid, robot: this });
+    });
   }
 }
 

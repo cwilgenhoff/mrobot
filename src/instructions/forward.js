@@ -9,22 +9,41 @@ class InstructionForward {
     return this.id;
   }
 
-  execute = ({ grid, robot }) => {
+  static calculateMovement(robot) {
     const { x, y } = robot.position;
     const STEP = 1;
 
     switch (robot.orientation) {
       case ORIENTATION.N:
-        return robot.setPosition( { x, y: y + STEP });
+        return { x, y: y + STEP };
       case ORIENTATION.E:
-        return robot.setPosition( { x: x + STEP, y });
+        return { x: x + STEP, y };
       case ORIENTATION.S:
-        return robot.setPosition( { x, y: y - STEP });
+        return { x, y: y - STEP };
       case ORIENTATION.W:
-        return robot.setPosition( { x: x - STEP, y });
+        return { x: x - STEP, y };
       default:
-        return;
+        return robot.position;
     }
+  }
+
+  execute = ({ grid, robot }) => {
+    if (!robot || !grid) {
+      return;
+    }
+
+    const newPosition = InstructionForward.calculateMovement(robot);
+
+    if (grid.isOutsideGrid(newPosition) && grid.isScentedPosition(robot.position)) {
+      return;
+    }
+
+    if (grid.isOutsideGrid(newPosition)) {
+      robot.setLost();
+      return grid.setScentedPosition(robot.position);
+    }
+
+    robot.setPosition(newPosition);
   }
 }
 

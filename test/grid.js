@@ -34,4 +34,23 @@ describe('Grid', () => {
     grid.maxPoint.x.should.be.equal(0);
     grid.maxPoint.y.should.be.equal(0);
   });
+
+  it('should set position as scented', () => {
+    grid.setMaxPoint({ x: 5, y: 51 });
+    grid.setScentedPosition({ x: 5, y: 5});
+    grid.isScentedPosition({ x: 5, y: 5}).should.equal(true);
+  });
+
+  it('should not have a position as scented', () => {
+    grid.setMaxPoint({ x: 5, y: 51 });
+    grid.isScentedPosition({ x: 5, y: 5}).should.equal(false);
+  });
+
+  it('should check if a point is outside the grid', () => {
+    grid.setMaxPoint({ x: 0, y: 0 });
+    grid.isOutsideGrid({ x: 1, y: 1}).should.equal(true);
+    grid.isOutsideGrid({ x: 0, y: 1}).should.equal(true);
+    grid.isOutsideGrid({ x: 1, y: 0}).should.equal(true);
+    grid.isOutsideGrid({ x: 0, y: 0}).should.equal(false);
+  });
 });

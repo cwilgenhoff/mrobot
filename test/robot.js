@@ -3,7 +3,8 @@ import chai from 'chai';
 chai.should();
 
 import Robot from '../src/robot';
-
+import Grid from '../src/grid';
+import InstructionLeft from '../src/instructions/left';
 
 describe('Robot', () => {
   let robot;
@@ -12,6 +13,10 @@ describe('Robot', () => {
   beforeEach(() => {
     robot = new Robot();
     sandbox = sinon.sandbox.create({ useFakeServer: false });
+  });
+
+  afterEach(() => {
+    sandbox.restore();
   });
 
   it('should exist', () => {
@@ -42,4 +47,33 @@ describe('Robot', () => {
     robot.setLost();
     robot.isLost.should.equal(true);
   });
+
+  describe('execute', () => {
+    let instructionSpy;
+
+    beforeEach(() => {
+      instructionSpy = sandbox.spy(InstructionLeft, 'execute')
+    });
+
+    it('should execute instructions', () => {
+      robot.execute([ InstructionLeft ], new Grid());
+
+      robot.isLost.should.equal(false);
+      instructionSpy.called.should.equal(true);
+    });
+
+    it('should not execute instructions if no grid', () => {
+      robot.execute([ InstructionLeft ], undefined);
+
+      instructionSpy.called.should.equal(false);
+    });
+
+    it('should not execute instructions if lost', () => {
+      robot.setLost();
+      robot.execute([ InstructionLeft ], new Grid());
+
+      robot.isLost.should.equal(true);
+      instructionSpy.called.should.equal(false);
+    });
+  })
 });

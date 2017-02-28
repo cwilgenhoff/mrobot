@@ -9,7 +9,7 @@ class InstructionLeft {
     return this.id;
   }
 
-  execute = ({ grid, robot }) => {
+  execute = ({ robot = {} }) => {
     switch (robot.orientation) {
       case ORIENTATION.N:
         return robot.setOrientation(ORIENTATION.W);

@@ -2,26 +2,30 @@ class Grid {
   constructor(maxValueCoordinate = 50) {
     this.maxValueCoordinate = maxValueCoordinate;
     this.maxPoint = { x: 0, y: 0 };
-    this.scentedPositions = [];
+    this.scentedPositions = {};
   }
 
-  isOutsideGrid(point) {
+  isOutsideGrid = (point) => {
+    return point.x > this.maxPoint.x || point.y > this.maxPoint.y;
+  }
+
+  isOverAllowedMaxPoint(point) {
     return point.x > this.maxValueCoordinate || point.y > this.maxValueCoordinate;
   }
 
-  isPositionScented(position) {
-    return this.scentedPositions.includes(position);
+  isScentedPosition = (position) => {
+    return this.scentedPositions[`${position.x}-${position.y}`] || false;
   }
 
-  setScentedPosition(position) {
-    this.scentedPositions = [
+  setScentedPosition = (position) => {
+    this.scentedPositions = {
       ...this.scentedPositions,
-      { ...position },
-    ]
+      [`${position.x}-${position.y}`]: true,
+    }
   }
 
   setMaxPoint = (point) => {
-    if (this.isOutsideGrid(point)) {
+    if (this.isOverAllowedMaxPoint(point)) {
       return;
     }
 
