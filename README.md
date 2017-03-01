@@ -8,9 +8,10 @@ Navigate the surface of mars from the comfort of your CLI.
 
 ## Requirements
 
-- Be able to rotate robots to the right and left keeping their position.
+- Be able to rotate robots to the right or left keeping their position.
 - Be able to move robots forward on step depending on their orientation (N, E, W, S).
 - Be able to extend the instructions robots can execute.
+- Be able to leave scent on the grid when a robot goes off the limits avoiding future ones to have the same problem.
 
 ## Installation
 
