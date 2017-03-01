@@ -1,7 +1,5 @@
 <h1 align="center">mrobot</h1>
 
-***
-
 [![Build Status](https://travis-ci.org/cwilgenhoff/mrobot.svg?branch=master)](https://travis-ci.org/cwilgenhoff/mrobot)
 
 Navigate the surface of mars from the comfort of your CLI.
