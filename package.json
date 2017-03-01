@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon src/index.js --exec babel-node",
-    "start": "npm run build && node dist/index.js",
+    "postinstall": "npm run build",
     "build": "babel src -d dist",
-    "test:watch": "npm test -- --watch",
-    "test": "mocha --compilers js:babel-register --recursive"
+    "start:dev": "nodemon src/index.js --exec babel-node",
+    "test": "mocha --compilers js:babel-register --recursive",
+    "test:watch": "npm test -- --watch"
   },
   "author": "Cristian Wilgenhoff",
   "license": "MIT",
@@ -17,9 +17,12 @@
     "babel-preset-es2015": "6.22.0",
     "babel-preset-stage-0": "6.22.0",
     "babel-register": "6.23.0",
-    "chai": "^3.5.0",
+    "chai": "3.5.0",
     "mocha": "3.2.0",
     "nodemon": "1.11.0",
     "sinon": "2.0.0-pre.6"
+  },
+  "dependencies": {
+    "commander": "2.9.0"
   }
 }
