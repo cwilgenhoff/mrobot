@@ -9,7 +9,7 @@ class Interpreter {
   constructor(filePath) {
     this.instructions = configureInstructions();
     this.lineReader = createInterface({
-      input: createReadStream(filePath),
+      input: createReadStream(filePath).on('error', this.handleFileErrors),
     });
     this.PATTERNS = {
       SET_GRID_MAX_POINT: /^[0-9]\s[0-9]$/,
@@ -21,6 +21,14 @@ class Interpreter {
 
   arrayFrom(line) {
     return line.trim().split('').filter(i => i !== ' ');
+  }
+
+  getLastAddedRobot() {
+    return this.robots[this.robots.length - 1];
+  }
+
+  handleFileErrors = (error) => {
+    console.log('There was an error trying to parse instructions.');
   }
 
   parseGridMaxPoint(line) {
@@ -43,10 +51,6 @@ class Interpreter {
   parseInstructions(line) {
     const input = this.arrayFrom(line);
     return input.map(char => this.instructions[char])
-  }
-
-  getLastAddedRobot() {
-    return this.robots[this.robots.length - 1];
   }
 
   execute = (line) => {
@@ -73,7 +77,7 @@ class Interpreter {
   parse = () => {
     this.lineReader
       .on('line', line => this.execute(line))
-      .on('close', () => this.results());
+      .on('close', () => this.results())
   }
 
   results() {

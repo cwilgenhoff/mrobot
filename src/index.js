@@ -1,7 +1,10 @@
-import path from 'path';
 import Interpreter from './interpreter';
 
+class App {
+  run = (filePath) => {
+    const interpreter = new Interpreter(filePath);
+    interpreter.parse();
+  }
+}
 
-const interpreter = new Interpreter(path.join(__dirname, '..', 'sample', 'data.txt'));
-
-interpreter.parse();
+export default new App();
